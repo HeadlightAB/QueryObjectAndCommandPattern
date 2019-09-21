@@ -2,7 +2,7 @@
 
 namespace Domain
 {
-    public interface IApiDataAccess : IDataSource
+    public interface IApiDataAccess : IDataAccess
     {
         HttpWebResponse Request(HttpWebRequest request);
     }
