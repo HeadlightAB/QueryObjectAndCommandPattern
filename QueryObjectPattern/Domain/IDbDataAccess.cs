@@ -4,8 +4,8 @@ namespace Domain
 {
     public interface IDbDataAccess : IDataSource
     {
-        TDomain[] Query<TDomain, TEntity>(Func<TEntity, bool> filter, Func<TEntity, TDomain> selector)
+        TDomainModel[] Query<TDomainModel, TEntity>(Func<TEntity, bool> filter, Func<TEntity, TDomainModel> selector)
             where TEntity : class
-            where TDomain : class;
+            where TDomainModel : class;
     }
 }

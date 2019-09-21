@@ -1,7 +1,7 @@
 ﻿namespace Domain
 {
-    public interface IQuery<T>
+    public interface IQuery<out TDomainModel, in TDataSource> where TDataSource : IDataSource
     {
-        T Execute(IDataSource dataSource);
+        TDomainModel Execute(TDataSource dataSource);
     }
 }
