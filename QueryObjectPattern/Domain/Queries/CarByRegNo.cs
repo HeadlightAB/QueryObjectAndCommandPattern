@@ -1,4 +1,6 @@
-﻿namespace Domain.Queries
+﻿using System.Linq;
+
+namespace Domain.Queries
 {
     public class CarByRegNo : IQuery<Domain.Models.Car, IDbDataAccess>
     {
@@ -11,7 +13,7 @@
 
         public Domain.Models.Car Execute(IDbDataAccess dataSource)
         {
-            throw new System.NotImplementedException();
+            return dataSource.Query<Models.Car, object>(o => true, o => new Domain.Models.Car()).SingleOrDefault();
         }
     }
 }

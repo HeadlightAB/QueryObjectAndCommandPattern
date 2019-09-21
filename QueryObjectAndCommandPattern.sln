@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "QueryObjectPattern", "Query
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "QueryObjectPattern\Domain\Domain.csproj", "{8CF9C370-A83A-4E0C-B0E5-E9958E292084}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "QueryObjectPattern\Tests\Tests.csproj", "{0BCD38C8-3D21-4BD4-A0F4-B389D1A101ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +19,17 @@ Global
 		{8CF9C370-A83A-4E0C-B0E5-E9958E292084}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CF9C370-A83A-4E0C-B0E5-E9958E292084}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CF9C370-A83A-4E0C-B0E5-E9958E292084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BCD38C8-3D21-4BD4-A0F4-B389D1A101ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BCD38C8-3D21-4BD4-A0F4-B389D1A101ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BCD38C8-3D21-4BD4-A0F4-B389D1A101ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BCD38C8-3D21-4BD4-A0F4-B389D1A101ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8CF9C370-A83A-4E0C-B0E5-E9958E292084} = {3C0FDFAC-3E2A-458D-845D-2FB4EA91754D}
+		{0BCD38C8-3D21-4BD4-A0F4-B389D1A101ED} = {3C0FDFAC-3E2A-458D-845D-2FB4EA91754D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA72AD05-3420-43A1-895C-6259DB9DFC58}
