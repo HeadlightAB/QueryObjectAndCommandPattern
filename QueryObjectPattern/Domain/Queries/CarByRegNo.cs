@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using DataAccess.DataSources;
 
 namespace Domain.Queries
 {
@@ -13,7 +14,9 @@ namespace Domain.Queries
 
         public Domain.Models.Car Execute(IDbDataAccess dataSource)
         {
-            return dataSource.Query<Models.Car, object>(o => true, o => new Domain.Models.Car()).SingleOrDefault();
+            return dataSource.Query<Models.Car, DataAccess.Entities.Car>(
+                entity => entity.RegNo == _regNo, 
+                entity => new Domain.Models.Car(entity.RegNo)).SingleOrDefault();
         }
     }
 }

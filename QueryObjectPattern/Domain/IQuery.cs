@@ -1,4 +1,6 @@
-﻿namespace Domain
+﻿using DataAccess;
+
+namespace Domain
 {
     public interface IQuery<out TDomainModel, in TDataSource> where TDataSource : IDataAccess
     {

@@ -1,4 +1,6 @@
-﻿namespace Domain.Queries
+﻿using DataAccess.DataSources;
+
+namespace Domain.Queries
 {
     public class TaxByRegNo : IQuery<float, IApiDataAccess>
     {
