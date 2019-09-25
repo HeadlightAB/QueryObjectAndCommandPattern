@@ -1,4 +1,6 @@
-﻿using DataAccess.DataSources;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using DataAccess.DataSources;
 
 namespace Domain.Queries
 {
@@ -11,9 +13,21 @@ namespace Domain.Queries
             _regNo = regNo;
         }
 
-        public float Execute(IApiDataAccess dataSource)
+        public async Task<float> Execute(IApiDataAccess dataSource)
         {
-            throw new System.NotImplementedException();
+            var response =
+                await dataSource.Request(new HttpRequestMessage(HttpMethod.Get, $"https://taxrate.cars.nu/{_regNo}"));
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                if (float.TryParse(content, out var result))
+                {
+                    return result;
+                }
+            }
+
+            return -1;
         }
     }
 }

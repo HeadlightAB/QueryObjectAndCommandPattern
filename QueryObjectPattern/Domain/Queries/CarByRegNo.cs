@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using DataAccess.DataSources;
 
 namespace Domain.Queries
@@ -12,11 +13,13 @@ namespace Domain.Queries
             _regNo = regNo;
         }
 
-        public Domain.Models.Car Execute(IDbDataAccess dataSource)
+        public async Task<Domain.Models.Car> Execute(IDbDataAccess dataSource)
         {
-            return dataSource.Query<Models.Car, DataAccess.Entities.Car>(
+            var result = await dataSource.Query<Models.Car, DataAccess.Entities.Car>(
                 entity => entity.RegNo == _regNo, 
-                entity => new Domain.Models.Car(entity.RegNo)).SingleOrDefault();
+                entity => new Domain.Models.Car(entity.RegNo));
+
+            return result.SingleOrDefault();
         }
     }
 }

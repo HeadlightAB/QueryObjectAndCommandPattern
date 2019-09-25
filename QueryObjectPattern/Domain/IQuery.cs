@@ -1,9 +1,10 @@
-﻿using DataAccess;
+﻿using System.Threading.Tasks;
+using DataAccess;
 
 namespace Domain
 {
-    public interface IQuery<out TDomainModel, in TDataSource> where TDataSource : IDataAccess
+    public interface IQuery<TDomainModel, in TDataSource> where TDataSource : IDataAccess
     {
-        TDomainModel Execute(TDataSource dataSource);
+        Task<TDomainModel> Execute(TDataSource dataSource);
     }
 }

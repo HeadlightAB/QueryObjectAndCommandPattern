@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using DataAccess.DataSources;
 using Domain.Queries;
 using FluentAssertions;
@@ -10,7 +12,7 @@ namespace Tests
     public class CarByRegNoQueryTests
     {
         [Fact]
-        public void ShouldReturnNotNull()
+        public async Task ShouldReturnNotNull()
         {
             var dbDataAccess = Substitute.For<IDbDataAccess>();
             dbDataAccess
@@ -19,7 +21,7 @@ namespace Tests
 
             var sut = new CarByRegNo("GLW975");
 
-            var car = sut.Execute(dbDataAccess);
+            var car = await sut.Execute(dbDataAccess);
 
             car.Should().NotBeNull();
         }
