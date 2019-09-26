@@ -15,8 +15,10 @@ namespace Domain.Queries
 
         public async Task<float> Execute(IApiDataAccess dataSource)
         {
+            // Url not valid, but for the purpose of the example it is sort of suitable
             var response =
-                await dataSource.Request(new HttpRequestMessage(HttpMethod.Get, $"https://taxrate.cars.nu/{_regNo}"));
+                await dataSource.Request(
+                    new HttpRequestMessage(HttpMethod.Get, $"https://www.google.com/{_regNo}"));
 
             if (response.IsSuccessStatusCode)
             {

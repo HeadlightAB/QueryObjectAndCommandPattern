@@ -14,9 +14,9 @@ namespace DataAccess.DataSources
             _dbContext = dbContext;
         }
 
-        public async Task<TDomainModel[]> Query<TDomainModel, TEntity>(Func<TEntity, bool> filter, Func<TEntity, TDomainModel> selector) 
-            where TDomainModel : class
-            where TEntity : class
+        public async Task<TDomainModel[]> Query<TDomainModel, TEntity>(
+            Func<TEntity, bool> filter,
+            Func<TEntity, TDomainModel> selector) where TDomainModel : class where TEntity : class
         {
             return await _dbContext.Set<TEntity>()
                 .Where(entity => filter(entity))
