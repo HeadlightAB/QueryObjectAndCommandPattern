@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DataAccess.DataSources;
@@ -17,7 +18,7 @@ namespace Tests
         {
             var dbDataAccess = Substitute.For<IDbDataAccess>();
             dbDataAccess
-                .Query(Arg.Any<Func<DataAccess.Entities.Car, bool>>(), Arg.Any<Func<DataAccess.Entities.Car, Domain.Models.Car>>())
+                .Query(Arg.Any<Expression<Func<DataAccess.Entities.Car, bool>>>(), Arg.Any<Expression<Func<DataAccess.Entities.Car, Domain.Models.Car>>>())
                 .Returns(new[] {new Domain.Models.Car("GLW975") });
 
             var sut = new CarByRegNo("GLW975");

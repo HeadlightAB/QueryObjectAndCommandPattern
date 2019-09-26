@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,12 +16,12 @@ namespace DataAccess.DataSources
         }
 
         public async Task<TDomainModel[]> Query<TDomainModel, TEntity>(
-            Func<TEntity, bool> filter,
-            Func<TEntity, TDomainModel> selector) where TDomainModel : class where TEntity : class
+            Expression<Func<TEntity, bool>> filter,
+            Expression<Func<TEntity, TDomainModel>> selector) where TDomainModel : class where TEntity : class
         {
             return await _dbContext.Set<TEntity>()
-                .Where(entity => filter(entity))
-                .Select(entity => selector(entity)).ToArrayAsync();
+                .Where(filter)
+                .Select(selector).ToArrayAsync();
         }
     }
 }
