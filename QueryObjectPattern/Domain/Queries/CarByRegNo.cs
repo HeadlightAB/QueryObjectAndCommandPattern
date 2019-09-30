@@ -17,7 +17,7 @@ namespace Domain.Queries
         {
             var result = await dataSource.Query<Models.Car, DataAccess.Entities.Car>(
                 entity => entity.RegNo == _regNo, 
-                entity => new Domain.Models.Car(entity.RegNo));
+                entity => new Domain.Models.Car(entity.RegNo, entity.Brand, entity.Model, entity.Year));
 
             return result.SingleOrDefault();
         }
