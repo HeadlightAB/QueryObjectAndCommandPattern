@@ -1,19 +1,27 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DataSources
 {
     public class DbDataAccess : IDbDataAccess
     {
-        public DbDataAccess()
+        private readonly DbContext _dbContext;
+
+        public DbDataAccess(DbContext dbContext)
         {
+            _dbContext = dbContext;
         }
 
-        public Task<TDomainModel[]> Query<TDomainModel, TEntity>(Func<TEntity, bool> filter, Func<TEntity, TDomainModel> selector) 
-            where TDomainModel : class
-            where TEntity : class
+        public async Task<TDomainModel[]> Query<TDomainModel, TEntity>(
+            Expression<Func<TEntity, bool>> filter,
+            Expression<Func<TEntity, TDomainModel>> selector) where TDomainModel : class where TEntity : class
         {
-            throw new NotImplementedException();
+            return await _dbContext.Set<TEntity>()
+                .Where(filter)
+                .Select(selector).ToArrayAsync();
         }
     }
 }
