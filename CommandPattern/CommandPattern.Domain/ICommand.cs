@@ -2,8 +2,8 @@
 
 namespace CommandPattern.Domain
 {
-    public interface ICommand<TDataAccess> where TDataAccess : IDataAccess
+    public interface ICommand<TDomainModel, TDataAccess> where TDataAccess : IDataAccess
     {
-        void Execute(TDataAccess dataAccess);
+        void Execute(TDomainModel domainModel, TDataAccess dataAccess);
     }
 }

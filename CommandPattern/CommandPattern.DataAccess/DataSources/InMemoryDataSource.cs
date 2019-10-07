@@ -1,26 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CommandPattern.DataAccess.Entities;
 
 namespace CommandPattern.DataAccess.DataSources
 {
     public class InMemoryDataSource : IDataAccess
     {
-        public IQueryable<Car> Cars { get; } = new List<Car>
+        public IQueryable<Entities.Car> Cars { get; } = new List<Entities.Car>
         {
-            new Car {RegNo = "GLW975"},
-            new Car {RegNo = "RNY293"},
-            new Car {RegNo = "TSP372"}
+            new Entities.Car {RegNo = "GLW975"},
+            new Entities.Car {RegNo = "RNY293"},
+            new Entities.Car {RegNo = "TSP372"}
         }.AsQueryable();
 
-        public void InspectionFailed(string regNo, DateTimeOffset when)
+
+        public void Store<TEntity>(TEntity entity)
         {
-            Cars.Where(x => x.RegNo == regNo).ToList().ForEach(x =>
+            if (typeof(TEntity) != typeof(Entities.Car))
             {
-                x.InspectionApproved = false;
-                x.InspectedAt = when;
-            });
+                throw new InvalidCastException("Unsupported type for this store");
+            }
+
+            if (entity is Entities.Car car)
+            {
+                var carStored = Cars.Single(x => x.RegNo == car.RegNo);
+                carStored.InspectedAt = car.InspectedAt;
+                carStored.InspectionApproved = car.InspectionApproved;
+            }
         }
     }
 }
