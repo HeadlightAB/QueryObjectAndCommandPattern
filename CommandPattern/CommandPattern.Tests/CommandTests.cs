@@ -1,5 +1,4 @@
 ﻿using System;
-using CommandPattern.DataAccess;
 using CommandPattern.DataAccess.DataSources;
 using CommandPattern.Domain.Commands;
 using CommandPattern.Domain.Models;
