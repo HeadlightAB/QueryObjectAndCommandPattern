@@ -14,7 +14,7 @@ namespace CommandPattern.DataAccess.DataSources
         }.AsQueryable();
 
 
-        public void Store<TEntity>(TEntity entity)
+        public virtual void Store<TEntity>(TEntity entity)
         {
             if (typeof(TEntity) != typeof(Entities.Car))
             {

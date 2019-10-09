@@ -1,4 +1,5 @@
 ﻿using System;
+using CommandPattern.DataAccess;
 using CommandPattern.DataAccess.DataSources;
 using CommandPattern.Domain.Commands;
 using CommandPattern.Domain.Models;
@@ -8,67 +9,55 @@ using Xunit;
 
 namespace CommandPattern.Tests
 {
-    public class CommandTests
+    public class CarInspectionFailedTests
     {
-        private static readonly InMemoryDataSource DataSource = new InMemoryDataSource();
+        private const string RegNo = "GLW975";
+
+        private readonly CarInspectionFailed _sut;
+        private readonly DateTimeOffset _inspectedAt;
+
+        public CarInspectionFailedTests()
+        {
+            _inspectedAt = DateTimeOffset.Now;
+            _sut = new CarInspectionFailed(_inspectedAt);
+        }
 
         [Fact]
         public void CarInspectionFailedTest()
         {
-            var domainModel = new Car("RNY293");
-            var inspectedAt = DateTimeOffset.UtcNow;
-            var sut = new CarInspectionFailed(inspectedAt);
-            
-            sut.Execute(domainModel,  DataSource);
+            var domainModel = new Car(RegNo);
+            var dataSource = new InMemoryDataSource();
 
-            var containSingle = DataSource.Cars.Should().ContainSingle(x => x.RegNo == "RNY293").Subject;
-            containSingle.InspectedAt.Should().Be(inspectedAt);
+            _sut.Execute(domainModel,  dataSource);
+
+            var containSingle = dataSource.Cars.Should().ContainSingle(x => x.RegNo == RegNo).Subject;
+            containSingle.InspectedAt.Should().Be(_inspectedAt);
             containSingle.InspectionApproved.Should().BeFalse();
         }
 
         [Fact]
         public void CarInspectionFailed_ShouldInvokeDataSource()
         {
+            var domainModel = new Car(RegNo);
             var dataSource = Substitute.For<InMemoryDataSource>();
 
-            var domainModel = new Car("RNY293");
-            var inspectedAt = DateTimeOffset.UtcNow;
-            var sut = new CarInspectionFailed(inspectedAt);
-
-            sut.Execute(domainModel, dataSource);
+            _sut.Execute(domainModel, dataSource);
 
             dataSource.Received().Store(Arg.Is<DataAccess.Entities.Car>(car =>
                 car.InspectionApproved == false &&
-                car.RegNo == "RNY293" &&
-                car.InspectedAt == inspectedAt));
+                car.RegNo == RegNo &&
+                car.InspectedAt == _inspectedAt));
         }
 
         [Fact]
         public void CarInspectionFailed_ShouldApplyDomainModelChanges()
         {
             var dataSource = Substitute.For<InMemoryDataSource>();
-            var domainModel = Substitute.For<Car>("RNY293");
+            var domainModel = Substitute.For<Car>(RegNo);
 
-            var inspectedAt = DateTimeOffset.UtcNow;
-            var sut = new CarInspectionFailed(inspectedAt);
+            _sut.Execute(domainModel, dataSource);
 
-            sut.Execute(domainModel, dataSource);
-
-            domainModel.Received().ApplyInspectionFailed(inspectedAt);
-        }
-
-        [Fact]
-        public void CarInspectionApprovedTest()
-        {
-            var domainModel = new Car("GLW975");
-            var inspectedAt = DateTimeOffset.UtcNow;
-            var sut = new CarInspectionApproved(inspectedAt);
-            
-            sut.Execute(domainModel,  DataSource);
-
-            var containSingle = DataSource.Cars.Should().ContainSingle(x => x.RegNo == "GLW975").Subject;
-            containSingle.InspectedAt.Should().Be(inspectedAt);
-            containSingle.InspectionApproved.Should().BeTrue();
+            domainModel.Received().ApplyInspectionFailed(_inspectedAt);
         }
     }
 }

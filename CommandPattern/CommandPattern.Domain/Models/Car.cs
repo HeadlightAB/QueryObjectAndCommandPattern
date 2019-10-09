@@ -13,13 +13,13 @@ namespace CommandPattern.Domain.Models
             RegNo = regNo;
         }
 
-        public void ApplyInspectionFailed(DateTimeOffset when)
+        public virtual void ApplyInspectionFailed(DateTimeOffset when)
         {
             InspectedAt = when;
             InspectionApproved = false;
         }
 
-        public void ApplyInspectionApproved(DateTimeOffset when)
+        public virtual void ApplyInspectionApproved(DateTimeOffset when)
         {
             InspectedAt = when;
             InspectionApproved = true;
